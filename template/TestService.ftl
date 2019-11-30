@@ -1,0 +1,92 @@
+package ${package_name}.service;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import ${package_name}.dict.dto.${table_name?cap_first}Dto;
+import ${package_name}.dto.CommResp;
+
+/**
+ * className: ${table_name?cap_first}TestService <BR>
+ * description: ${table_annotation}测试业务类<BR>
+ * remark: <BR>
+ * author: ${author} <BR>
+ * createDate: ${date} <BR>
+ */
+@Slf4j
+@Service
+public class ${table_name?cap_first}TestService extends BaseParamService{
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Value("${r'${oauth2.dev-token}'}")
+    private String devToken;
+
+    List<List<String>> listA = getData("doctorOrderGroupDict",";");
+
+    public ${table_name?cap_first}Dto save(JSONObject jsob) throws Exception{
+        MockHttpServletRequestBuilder builder = BaseDataUtil
+        .getBuilder(jsob, "post", "/doctor-order-group-dict");
+        String responseString = BaseDataUtil.mockExecute(mockMvc, builder, devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        return commResp.getData().getDataInfo();
+    }
+
+    public String delete(String[] ids) throws Exception {
+        String responseString = mockMvc.perform(
+        MockMvcRequestBuilders.delete("/doctor-order-group-dict")
+        .param("ids",ids)
+        .param("access_token",devToken)
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andDo(MockMvcResultHandlers.print())
+        .andReturn().getResponse().getContentAsString();
+        System.out.println("--------\r 返回的json = " + responseString);
+        return responseString;
+    }
+
+    public void update(JSONObject jsob) throws Exception{
+        MockHttpServletRequestBuilder builder = BaseDataUtil
+        .getBuilder(jsob, "put", "/doctor-order-group-dict");
+        BaseDataUtil.mockExecute(mockMvc, builder, devToken);
+    }
+
+    public void query() throws Exception{
+        List<String> list = listA.get(3);
+        String responseString = mockMvc.perform(
+        MockMvcRequestBuilders.get("/doctor-order-group-dict")
+        .param("pageNum",list.get(0))
+        .param("pageSize",list.get(1))
+        .param("query",list.get(2))
+        .param("access_token",devToken)
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andDo(MockMvcResultHandlers.print())
+        .andReturn().getResponse().getContentAsString();
+        // 断言  ${author};
+        Assert.assertEquals("SUCCESS", JSON.parseObject(responseString).getString("code"));
+        System.out.println("--------\r 返回的json = " + responseString);
+        CommResp<List<?>> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<List<?>>>() {
+        });
+        List<?> itemList =commResp.getData().getDataInfo();
+        Assert.assertTrue(itemList.size()>0);
+    }
+
+}

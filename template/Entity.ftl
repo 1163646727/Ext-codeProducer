@@ -6,7 +6,7 @@ import lombok.Data;
 import org.ssh.boot.businessCommon.entity.BaseItemEntity;
 
 /**
- * className:  ${table_name} <BR>
+ * className:  ${table_name?cap_first} <BR>
  * description: ${table_annotation} <BR>
  * remark: <BR>
  * author: ${author} <BR>
@@ -15,22 +15,25 @@ import org.ssh.boot.businessCommon.entity.BaseItemEntity;
 @Data
 @Entity
 @Table(name = "T_${table_name}")
-public class ${table_name} extends BaseItemEntity {
-<#if model_column?exists><#--model_column:参数集合-->
-<#list model_column as model>
-    /** ${model.columnComment!} ${author}*/
+public class ${table_name?cap_first} extends BaseItemEntity {
+<#if field?exists><#--field:参数集合-->
+<#list field as item>
+
 <#--根据字段的类型，创建对应的属性-->
-<#if (model.columnType = 'varchar' || model.columnType = 'text')>
-    private String ${model.changeColumnName?uncap_first};
+<#if (item.name != 'id')>
+    /** ${item.annotation!} ${author}*/
+<#if (item.type = 'varchar' || item.type = 'text')>
+    private String ${item.name?uncap_first};
 </#if>
-<#if model.columnType = 'timestamp' >
-    private Date ${model.changeColumnName?uncap_first};
+<#if item.type = 'timestamp' >
+    private Date ${item.name?uncap_first};
 </#if>
-<#if model.columnType = 'numeric' >
-    private Float ${model.changeColumnName?uncap_first};
+<#if item.type = 'numeric' >
+    private Float ${item.name?uncap_first};
 </#if>
-<#if model.columnType = 'bigint' >
-    private Long ${model.changeColumnName?uncap_first};
+<#if item.type = 'bigint' >
+    private Long ${item.name?uncap_first};
+</#if>
 </#if>
 </#list>
 </#if>

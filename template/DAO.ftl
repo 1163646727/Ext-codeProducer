@@ -1,29 +1,17 @@
-package ${package_name}.repository.mybatis;
+package ${package_name}.dao;
 
-import com.evada.de.common.annotation.mybatis.MyBatisRepository;
-import ${package_name}.dto.${table_name}DTO;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import ${package_name}.entity.${table_name?cap_first};
+import org.ssh.boot.orm.dao.BaseDao;
 
 /**
- * interfaceName: ${table_name}DAO <BR>
- * description: ${table_annotation}DAO 层<BR>
- * remark: <BR>
- * author: ${author} <BR>
- * createDate: ${date} <BR>
- */
-@MyBatisRepository
-public interface ${table_name}DAO {
-
-    ${table_name}DTO findDTOById(@Param("id")String id);
-
-
-    /**
-    * 描述：查询${table_annotation}列表以及高级搜索(分页)
-    * @param page  分页参数
-    * @param ${table_name?uncap_first}DTO  ${table_annotation}DTO
-    */
-    Page<${table_name}DTO> find${table_name}Page(${table_name}DTO ${table_name?uncap_first}DTO, Pageable page);
+* interfaceName: ${table_name?cap_first}Dao <BR>
+* description: ${table_annotation}数据层<BR>
+* remark: <BR>
+* author: ${author} <BR>
+* createDate: ${date} <BR>
+*/
+@Repository
+public interface ${table_name?cap_first}Dao extends BaseDao<${table_name?cap_first},Long> {
 
 }
