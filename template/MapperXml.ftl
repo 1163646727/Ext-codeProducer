@@ -5,11 +5,12 @@
 
     <!-- 根据条件查询 -->
     <select id="query" resultType="${package_name}.dto.${table_name?cap_first}Dto">
-        select * from T_${table_name}
+        select t.id ,<#if field?exists><#list 0..(field!?size-1) as i><#if field[i].name != 'id'>t.${field[i].name?uncap_first} <#if i!= field!?size-1>,</#if></#if></#list></#if>
+        from T_${table_name} t
         <where>
             <if test="query != null and query != ''">
                 <#if field?exists>
-                and ( <#list 0..(field!?size-1) as i><#if field[i].name != 'id'>${field[i].name?uncap_first} like '%${r'${query}'}%'<#if i!= field!?size-1> or </#if></#if></#list> )
+                and ( <#list 0..(field!?size-1) as i><#if field[i].name != 'id'>t.${field[i].name?uncap_first} like '%${r'${query}'}%'<#if i!= field!?size-1> or </#if></#if></#list> )
                 </#if>
             </if>
         </where>
