@@ -38,7 +38,7 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
 
     public ${table_name?cap_first}Dto save(JSONObject jsob) throws Exception{
         MockHttpServletRequestBuilder builder = BaseDataUtil
-        .getBuilder(jsob, "post", "/doctor-order-group-dict");
+        .getBuilder(jsob, "post", "/${path}");
         String responseString = BaseDataUtil.mockExecute(mockMvc, builder, devToken);
         CommResp<${table_name?cap_first}Dto> commResp = JSONObject
         .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
@@ -48,7 +48,7 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
 
     public String delete(String[] ids) throws Exception {
         String responseString = mockMvc.perform(
-        MockMvcRequestBuilders.delete("/doctor-order-group-dict")
+        MockMvcRequestBuilders.delete("/${path}")
         .param("ids",ids)
         .param("access_token",devToken)
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -62,14 +62,14 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
 
     public void update(JSONObject jsob) throws Exception{
         MockHttpServletRequestBuilder builder = BaseDataUtil
-        .getBuilder(jsob, "put", "/doctor-order-group-dict");
+        .getBuilder(jsob, "put", "/${path}");
         BaseDataUtil.mockExecute(mockMvc, builder, devToken);
     }
 
     public void query() throws Exception{
         List<String> list = listA.get(3);
         String responseString = mockMvc.perform(
-        MockMvcRequestBuilders.get("/doctor-order-group-dict")
+        MockMvcRequestBuilders.get("/${path}")
         .param("pageNum",list.get(0))
         .param("pageSize",list.get(1))
         .param("query",list.get(2))

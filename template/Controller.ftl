@@ -33,7 +33,7 @@ import ${package_name}.service.${table_name?cap_first}Service;
  */
 @Slf4j
 @RestController
-@RequestMapping("/${table_name}")
+@RequestMapping("/${path}")
 @Api(value = " ${table_annotation}", tags = " ${table_annotation}")
 public class ${table_name?cap_first}Controller {
 
