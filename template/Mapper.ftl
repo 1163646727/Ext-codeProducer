@@ -1,9 +1,9 @@
-package ${package_name}.mapper;
+package ${package_name}.${block}.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import ${package_name}.dto.${table_name?cap_first}Dto;
+import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
 
 /**
  * interfaceName: ${table_name?cap_first}Mapper <BR>

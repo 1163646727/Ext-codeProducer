@@ -1,7 +1,7 @@
-package ${package_name}.dao;
+package ${package_name}.${block}.dao;
 
 import org.springframework.stereotype.Repository;
-import ${package_name}.entity.${table_name?cap_first};
+import ${package_name}.${block}.entity.${table_name?cap_first};
 import org.ssh.boot.orm.dao.BaseDao;
 
 /**

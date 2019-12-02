@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ${package_name}.dict.dto.${table_name?cap_first}Dto;
+import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
 import ${package_name}.dto.CommResp;
 
 /**
@@ -34,7 +34,7 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
     @Value("${r'${oauth2.dev-token}'}")
     private String devToken;
 
-    List<List<String>> listA = getData("doctorOrderGroupDict",";");
+    List<List<String>> listA = getData("${table_name?uncap_first}",";");
 
     public ${table_name?cap_first}Dto save(JSONObject jsob) throws Exception{
         MockHttpServletRequestBuilder builder = BaseDataUtil
@@ -87,6 +87,25 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         });
         List<?> itemList =commResp.getData().getDataInfo();
         Assert.assertTrue(itemList.size()>0);
+    }
+
+    public ${table_name?cap_first}Dto findById(Long id) throws Exception {
+        String responseString = mockMvc.perform(
+        MockMvcRequestBuilders.get("/${path}/findById")
+        .param("id",String.valueOf(id))
+        .param("access_token",devToken)
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andDo(MockMvcResultHandlers.print())
+        .andReturn().getResponse().getContentAsString();
+        // 断言  ChenQi;
+        Assert.assertEquals("SUCCESS", JSON.parseObject(responseString).getString("code"));
+        System.out.println("--------\r 返回的json = " + responseString);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        return commResp.getData().getDataInfo();
     }
 
 }

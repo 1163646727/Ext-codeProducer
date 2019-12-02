@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import ${package_name}.dict.dao.${table_name?cap_first}Dao;
-import ${package_name}.dict.dto.${table_name?cap_first}Dto;
-import ${package_name}.dict.service.${table_name?cap_first}Service;
+import ${package_name}.${block}.dao.${table_name?cap_first}Dao;
+import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
+import ${package_name}.${block}.service.${table_name?cap_first}Service;
 import ${package_name}.service.BaseDataUtil;
 import ${package_name}.service.${table_name?cap_first}TestService;
 import ${package_name}.utils.cache.ICache;
@@ -95,7 +95,7 @@ public class ${table_name?cap_first}Test extends BaseTest {
         // 新增数据主键  ${author};
         Long id = itemDto.getId();
         // 断言 ${author}
-        Assert.assertNotNull(${table_name?uncap_first}Dao.findById(id));
+        Assert.assertNotNull(${table_name?uncap_first}TestService.findById(id));
     }
 
     @Test

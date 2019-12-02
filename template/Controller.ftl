@@ -1,4 +1,4 @@
-package ${package_name}.web;
+package ${package_name}.${block}.web;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.ssh.boot.dto.CommResp;
 import org.ssh.boot.dto.EkPageInfo;
 import org.ssh.boot.execption.ValidateException;
-import ${package_name}.constant.ManagerCodeMsg;
-import ${package_name}.dto.${table_name?cap_first}Dto;
-import ${package_name}.entity.${table_name?cap_first};
-import ${package_name}.param.${table_name?cap_first}Param;
-import ${package_name}.service.${table_name?cap_first}Service;
+import ${package_name}.${block}.constant.<#if (block = 'dict') >Nurse<#else >${block?cap_first}</#if>CodeMsg;
+import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
+import ${package_name}.${block}.entity.${table_name?cap_first};
+import ${package_name}.${block}.param.${table_name?cap_first}Param;
+import ${package_name}.${block}.service.${table_name?cap_first}Service;
 
 /**
  * className: ${table_name?cap_first}Controller <BR>
@@ -64,7 +64,7 @@ public class ${table_name?cap_first}Controller {
         // 判断该数据ID是否存在${author};
         ${table_name?cap_first} item = ${table_name?uncap_first}Service.queryByIds(id);
         if (item == null) {
-        throw new ValidateException(ManagerCodeMsg.ERROR_PROMPT, "该数据ID不存在了！");
+        throw new ValidateException(<#if (block = 'dict') >Nurse<#else >${block?cap_first}</#if>CodeMsg.ERROR_PROMPT, "该数据ID不存在了！");
         }
         // 修改 ${author}
         ${table_name?cap_first}Dto itemDto = ${table_name?uncap_first}Service.update(item, itemParam);

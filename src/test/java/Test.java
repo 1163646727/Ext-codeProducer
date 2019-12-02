@@ -10,9 +10,12 @@ public class Test {
 
     public static void main(String[] args) {
 
-        String str = "adminDict";
+        /*String str = "adminDict";
         String str_abc = camelToUnderline(str);   //  下划线小写:abc_def
-        System.out.println("驼峰转化成下划线小写 :" + str_abc);
+        System.out.println("驼峰转化成下划线小写 :" + str_abc);*/
+        String st = "org.ssh.boo";
+        String st2 = st.replace(".", "/");
+        System.out.println("st2"+st2);
     }
 
     //驼峰转下划线
